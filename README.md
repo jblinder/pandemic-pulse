@@ -15,6 +15,10 @@ Since the World Health Organization declared COVID-19 an international health em
 
 National figures for COVID-19 infections and deaths are so large that they strike many of us as simultaneously overwhelming and meaningless or incomprehensible. Meanwhile, lockdowns have made our everyday lives devoid of in-person interactions (handshakes, hugs, physical touch), and have instead rendered our computers and phones as the primary or even sole means through which we experience, understand, or engage with the larger, “outside” world during this global pandemic. 
 
+## How does it work?
+
+**Pandemic Pulse** does not alter any persistent data on your hard drive, nor does it permanently change anything on your computer. It is malware in that strains your computer’s resources. Once you start the application, Pandemic Pulse runs background processes that stress your CPU (via [common diagnostic tools](https://github.com/jblinder/pandemic-pulse#acknowledgments) and adjusts your screen’s brightness (by applying an overlay on top of your desktop), based on COVID-19 statistics in your selected region. When you stop or close the application, these processes end completely and your CPU and display return to their original states. The code does not do anything to intentionally damage your computer, however as with any software, please use at your own risk.
+
 ## Usage
 
 Installation and development requires:

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <!-- <meta http-equiv="Content-Security-Policy"
+    content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" /> -->
+  <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
+  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <link rel="stylesheet" href="./contents/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="./contents/styles/style.css" />
+  <script>
+    const jQuery = require('jquery')
+    const $ = jQuery
+  </script>
+  <script>require('jquery-sparkline')</script>
+  <script>require('popper.js');</script>
+  <title>Pandemic Pulse</title>
+</head>
+
+<body>
+  <header>
+    <div id="new-version" class="pt-3 pl-4 pr-4 pb-1" style="display: none;">
+      <p><strong>A new version is avaialbe. <a id="update-button" class="btn btn-sm btn-primary ml-2" href="#">Download</a></strong></p>
+    </div>
+    <nav class="navbar navbar-dark container-fluid">
+      <div class="col-12"">
+        <a class="navbar-brand text-uppercase" href="#" id="app-name">Pandemic Pulse</a><span id="sparkline"></span>
+        <!-- <img width="50px" src="../assets/images/final-logo/icon.iconset/icon_128x128.png"/> -->
+        <!-- <span width="100px" height="100px" id="sparkline"></span> -->
+      </div>
+      <div class="form-group col-sm-5">
+        <label id="location-label" for="state" class="control-label">Select Location</label>
+        <div>
+          <select class="form-control" id="location-select" name="location-select">
+            <option value="US">United States</option>
+            <option value="AK">Alaska</option>
+            <option value="AL">Alabama</option>
+            <option value="AR">Arkansas</option>
+            <option value="AS">American Samoa</option>
+            <option value="AZ">Arizona</option>
+            <option value="CA">California</option>
+            <option value="CO">Colorado</option>
+            <option value="CT">Connecticut</option>
+            <option value="DC">District of Columbia</option>
+            <option value="DE">Delaware</option>
+            <option value="FL">Florida</option>
+            <option value="GA">Georgia</option>
+            <option value="GU">Guam</option>
+            <option value="HI">Hawaii</option>
+            <option value="IA">Iowa</option>
+            <option value="ID">Idaho</option>
+            <option value="IL">Illinois</option>
+            <option value="IN">Indiana</option>
+            <option value="KS">Kansas</option>
+            <option value="KY">Kentucky</option>
+            <option value="LA">Louisiana</option>
+            <option value="MA">Massachusetts</option>
+            <option value="MD">Maryland</option>
+            <option value="ME">Maine</option>
+            <option value="MI">Michigan</option>
+            <option value="MN">Minnesota</option>
+            <option value="MO">Missouri</option>
+            <option value="MP">Northern Mariana Islands</option>
+            <option value="MS">Mississippi</option>
+            <option value="MT">Montana</option>
+            <option value="NC">North Carolina</option>
+            <option value="ND">North Dakota</option>
+            <option value="NE">Nebraska</option>
+            <option value="NH">New Hampshire</option>
+            <option value="NJ">New Jersey</option>
+            <option value="NM">New Mexico</option>
+            <option value="NV">Nevada</option>
+            <option value="NY">New York</option>
+            <option value="OH">Ohio</option>
+            <option value="OK">Oklahoma</option>
+            <option value="OR">Oregon</option>
+            <option value="PA">Pennsylvania</option>
+            <option value="PR">Puerto Rico</option>
+            <option value="RI">Rhode Island</option>
+            <option value="SC">South Carolina</option>
+            <option value="SD">South Dakota</option>
+            <option value="TN">Tennessee</option>
+            <option value="TX">Texas</option>
+            <option value="UM">United States Minor Outlying Islands</option>
+            <option value="UT">Utah</option>
+            <option value="VA">Virginia</option>
+            <option value="VI">Virgin Islands</option>
+            <option value="VT">Vermont</option>
+            <option value="WA">Washington</option>
+            <option value="WI">Wisconsin</option>
+            <option value="WV">West Virginia</option>
+            <option value="WY">Wyoming</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-7">
+        <div class="row">
+          <div class="col-6" id="cpu">
+            <h2 class="metric-name usage-name">CPU</h2>
+            <div id="sparkline-cpu" class="usage-graph"></div>
+            <p id="cpu-usage" class="usage"></p>
+          </div>
+          <div class="col-6 justify-content-center" id="mem">
+            <h2 class="metric-name usage-name">BRIGHTNESS</h2>
+            <div id="sparkline-brightness" class="usage-graph"></div>
+            <p id="brightness" class="usage"></p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button class="btn btn-md" id="exit-button">
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.146-3.146a.5.5 0 0 0-.708-.708L8 7.293 4.854 4.146a.5.5 0 1 0-.708.708L7.293 8l-3.147 3.146a.5.5 0 0 0 .708.708L8 8.707l3.146 3.147a.5.5 0 0 0 .708-.708L8.707 8l3.147-3.146z" />
+          </svg>
+        </button>
+        <button class="btn btn-md" id="about-button">
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-question-circle-fill" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.57 6.033H5.25C5.22 4.147 6.68 3.5 8.006 3.5c1.397 0 2.673.73 2.673 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.355H7.117l-.007-.463c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.901 0-1.358.603-1.358 1.384zm1.251 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z" />
+          </svg>
+        </button>
+
+      </div>
+    </nav>
+  </header>
+  <main role="main" class="container-fluid">
+    <hr/>
+    <div class="row text-center">
+      <div class="col-sm-6 justify-content-center covid-stat mb-3 mt-1">
+        <h2 class="metric-name ml-3"><small></small>INFECTION RATE
+
+          <div class="tooltip-custom">
+            <span><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle info-button"
+                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                <path
+                  d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z" />
+                <circle cx="8" cy="4.5" r="1" />
+              </svg></span>
+
+            <span class="tooltiptext">Defined here as the number of people who have tested positive for COVID-19 in the
+              past 2 weeks, divided by the state population. The state-specific Infection Rate stresses your CPU on a
+              1:100 scale. </span>
+          </div>
+        </h2>
+        <p id="infection-rate" class="metric"></p>
+      </div>
+      <div class="col-sm-6 justify-content-center covid-stat">
+        <h2 class="metric-name ml-3">DEATH RATE
+          <div class="tooltip-custom">
+            <span><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle info-button"
+                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                <path
+                  d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z" />
+                <circle cx="8" cy="4.5" r="1" />
+              </svg></span>
+
+            <span class="tooltiptext" style="margin-left: -230px;">Defined here as the number of people who have died
+              from COVID-19, divided by the number of those who have tested positive. Both the deaths and positive cases
+              are for just the specified state, over the past 2 weeks. The state-specific Death Rate dims your Screen
+              Brightness on a 1:50 scale.</span>
+          </div>
+        </h2>
+        <p id="death-rate" class="metric"></p>
+      </div>
+
+    </div>
+    <hr />
+    <div class="row text-left text-white mt-3">
+      <div class="col-12 d-flex justify-content-center">
+        <table class="table-borderless table-sm text-white">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col" class="text-center"><small>Total</small></th>
+              <th scope="col" class="text-center"><small>Today</small></th>
+              <th scope="col" class="text-center"><small>14-day Trend</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row"><small>Cases</small></th>
+              <td id="infections-total" class="summary-stat text-center"></td>
+              <td id="infections-today" class="summary-stat text-center"></td>
+              <td>
+                <div id="sparkline-infections" class="metric-graph"></div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><small>Deaths</small></th>
+              <td id="deaths-total" class="summary-stat text-center"></td>
+              <td id="deaths-today" class="summary-stat text-center"></td>
+              <!-- <td>2%</td> -->
+              <td>
+                <div id="sparkline-deaths" class="metric-graph"></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="controls" class="mt-4">
+      <button type="button" id="toggle-process" class="btn btn-primary shadow-none btn-lg  btn-block"
+        data-toggle="button" aria-pressed="false" autocomplete="off">
+        Start
+      </button>
+    </div>
+  </main>
+  <script src="./renderer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,248 @@
+@font-face {
+    font-family: 'decima_mono';
+    /* src: url('../fonts/decima_mono-webfont.woff') format('woff'); */
+    src: url('../fonts/decima__mono_light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RobotoThin';
+    src: url('../fonts/Roboto-Thin.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RobotoRegular';
+    src: url('../fonts/Roboto-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RobotoBold';
+    src: url('../fonts/Roboto-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body, h1 {
+    font-family: 'RobotoThin', 'decima_mono';
+    background-color: #0F0F0F;
+    color: #f1dede
+}
+
+label {
+    font-size: 12px;
+}
+
+.navbar-brand {
+    font-size: 25px;
+}
+
+.btn {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    border-radius: 0 !important;
+}
+
+.btn-primary, .btn-primary:focus, .btn-primary:active {
+    background-color: #F1DEDE;
+    color: #0F0F0f;
+}
+
+.btn-primary:hover {
+    background-color: #FFFFFF;
+    color: #0F0F0F;
+}
+
+.btn-danger {
+    background-color: #ED2E58;
+}
+
+.btn-danger:hover {
+    background-color: #DE1A1A;
+}
+
+* {
+    border-radius: 0 !important;
+}
+
+.sparkline-show{
+    display: block;
+}
+
+#sparkline {
+    position: relative;
+    top: 18px;
+    margin: 10px;
+    width:50px;
+    height: 50px;
+    display: none;
+}
+
+.covid-stat {
+    height: auto;
+}
+
+#location-select {
+    border: none;
+    box-shadow: none;
+    background-color: #F1DEDE;
+}
+
+.metric {
+    font-family: "decima_mono";
+    font-size: 60px;
+    letter-spacing: -0.115em;
+    color: #f24333;
+    margin: 0;
+    width: 100%;
+    margin-top: -7px;
+    margin-bottom: -10px;
+    /* float: left; */
+}
+
+#sparkline-brightness {
+    text-align: left;
+}
+
+.usage-graph {
+    /* width: 50%; */
+}
+
+.metric-graph {
+    width: 100%;
+    text-align: center;
+}
+
+.row {
+    text-align: center;
+}
+
+.col-sm-6>p {
+    text-align: center;
+    /* margin: -20px; */
+}
+
+.metric-name {
+    font-family: "decima_mono";
+    font-size: 26px;
+    text-transform: uppercase;
+    letter-spacing: -0.05em;
+    margin: 0;
+}
+
+#toggle-process {
+    float: left;
+    font-family: "RobotoRegular";
+}
+
+#exit-button {
+    color: #f24333;
+    position: absolute;
+    right: 5px;
+    top: 5px
+}
+
+#about-button {
+    color: #f24333;
+    position: absolute;
+    right: 30px;
+    top: 5px
+}
+
+.usage-name {
+    font-size: 18px;
+}
+
+.usage {
+    font-family: "decima_mono";
+    letter-spacing: -0.05em;
+    color: #f24333;
+    margin: 0;
+    font-size: 18px
+}
+
+.info-button {
+    width: 12px;
+    height: 12px;
+    position: relative;
+    top: -12px;
+    left: -10px;
+}
+
+.tooltip-custom {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip-custom .tooltiptext {
+    font-size: 12px;
+    visibility: hidden;
+    width: 300px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 20%;
+    margin-left: -260px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip-custom .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip-custom:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+#app-name {
+    color: #f24333;
+    font-family: "decima_mono";
+    letter-spacing: -2px;
+    position: relative;
+    left: -5px;
+}
+
+li {
+    background: none !important;
+}
+
+table tr td {
+    font-size: 17px;
+    letter-spacing: .5px;
+}
+
+.summary-stat {
+    color: #f24333;
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(242, 67, 51, 0.2);
+}
+
+#new-version{
+    background: #f24333;
+    color: #0F0F0F;
+}

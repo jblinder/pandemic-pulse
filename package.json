@@ -1,6 +1,6 @@
 {
   "name": "pandemicpulse",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Pandemic Pulse infects your computer's resources at the rate of COVID-19 infections and deaths in your location.",
   "main": "main.js",
   "productName": "pandemicpulse",

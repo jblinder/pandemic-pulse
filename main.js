@@ -14,10 +14,10 @@ global.sharedObj = {}
 app.whenReady().then(() => {
   createWindow()
   createTray()
-
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+
 })
 
 app.on('window-all-closed', function () {
@@ -26,7 +26,7 @@ app.on('window-all-closed', function () {
 })
 
 function startApp(loadEvent) {
-  const location = 'us'
+  const location = 'ny'
   covid.getRate(location).then(covid => {
     global.sharedObj.covid = covid
     global.sharedObj.location = 'United States'
@@ -46,6 +46,8 @@ function createWindow() {
     width: 325,
     // width: 650,
     height: 730,
+    x:500,
+    y:0,
     frame: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -62,7 +64,7 @@ function createWindow() {
   overlay = new BrowserWindow({
     width: width,
     height: height,
-    x: 0, y: 0,
+    x: 500, y: 500,
     opacity: 0,
     alwaysOnTop: true,
     frame: false,
@@ -106,7 +108,7 @@ function positionWindow() {
   const windowPos = mainWindow.getBounds()
   let x, y = 0
   if (process.platform == 'darwin') {
-    x = Math.round(trayPos.x + (trayPos.width / 2) - (windowPos.width / 2))
+    x = Math.round(trayPos.x + (trayPos.width / 2) - (windowPos.width / 2)) - 325
     y = Math.round(trayPos.y + trayPos.height)
   } else {
     x = Math.round(trayPos.x + (trayPos.width / 2) - (windowPos.width / 2))
@@ -132,6 +134,7 @@ function updateWindowPositionForAlert() {
 /* LISTENERS */
 
 ipcMain.on('app-loaded', (event) => {
+  console.log("loaded")
   startApp(event);
 })
 

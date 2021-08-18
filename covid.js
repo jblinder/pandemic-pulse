@@ -3,7 +3,8 @@ COVID-19 Datasource
 */
 const fetch = require("node-fetch");
 const population = require('./population');
-const SCALER_DEATH = 50 
+const { Headers } = require('node-fetch');
+const SCALER_DEATH = 50
 const SCALER_INFECTIONS = 100
 
 const URL_US = 'https://covidtracking.com/api/v1/us/'
@@ -13,6 +14,7 @@ const JSON_TIMEFRAME = 'daily.json'
 const getAll = (location) => {
     return new Promise(function (resolve, reject) {
         get(location).then(data => {
+            console.log("all data", location)
             const today = data[0].deathIncrease
             const last = data[14].deathIncrease
             const daily = data.map(d => d.deathIncrease)
@@ -28,6 +30,7 @@ const getAll = (location) => {
 const getRate = (location) => {
     return new Promise(function (resolve, reject) {
         get(location).then(data => {
+            console.log("get rate", data)
             if (!data)
                 reject(location, data)
             const deaths = calculateDeaths(location, data)
@@ -53,8 +56,8 @@ const calculateDeaths = (location, data) => {
     const all = data[0].death
     const today = data[0].deathIncrease
     const deathsFortnightly = data.slice(0, 13).map(d => d.deathIncrease)
-    console.log(`death rate ${deathRate}`)
-    console.log(`deaths fortnightly ${data.slice(0, 13).map(d => d.deathIncrease)}`)
+    // console.log(`death rate ${deathRate}`)
+    // console.log(`deaths fortnightly ${data.slice(0, 13).map(d => d.deathIncrease)}`)
     return {
         "deaths": deathRate,
         "deathsToday": today,
@@ -74,8 +77,8 @@ const calculateInfections = (location, data) => {
     const today = data[0].positiveIncrease
     const infectionsFortnightly = data.slice(0, 13).map(d => d.positiveIncrease)
     const infectionsAllDaily = data.map(d => d.positiveIncrease)
-    console.log(`infection rate ${infectionRate}`)
-    console.log(`infections fortnightly ${data.slice(0, 13).map(d => d.positiveIncrease)}`)
+    // console.log(`infection rate ${infectionRate}`)
+    // console.log(`infections fortnightly ${data.slice(0, 13).map(d => d.positiveIncrease)}`)
     return {
         "infections": infectionRate,
         "infectionsToday": today,
@@ -86,20 +89,47 @@ const calculateInfections = (location, data) => {
     }
 }
 
+// Convert CDC format to depricated Alantic Covid Tracking project
+const convertData = (cdcData) => {
+    convertedData = cdcData.map(function (d) {
+        return {
+            "deathIncrease": parseInt(d.new_death),
+            "positiveIncrease": parseInt(d.new_case),
+            "death": parseInt(d.tot_death),
+            "positive": parseInt(d.tot_cases)
+        }
+    })
+    return convertedData;
+}
+
 
 const get = (location) => {
     return new Promise(function (resolve, reject) {
         let url;
-        if (location == 'us' || !location){
-            url = `${URL_US}${JSON_TIMEFRAME}`
-        }
-        else{
-            url = `${URL_STATE}${location}/${JSON_TIMEFRAME}`
-        }
+        // if (location == 'us' || !location){
+        //     //url = `${URL_US}${JSON_TIMEFRAME}`
+        // }
+        // else{
+        //     //url = `${URL_STATE}${location}/${JSON_TIMEFRAME}`
+        // }
+        console.log("new location", location)
+        url = `https://data.cdc.gov/resource/9mfq-cb36.json?$order=created_at&state=${location.toUpperCase()}`
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                resolve(data)
+                if (!data) {
+                    reject()
+                    return
+                }
+                if (location) {
+                    let newData =
+                        data.sort(function (a, b) {
+                            return new Date(b.submission_date) - new Date(a.submission_date);
+                        });
+                    newData = convertData(newData)
+                    resolve(newData)
+                }
+
             })
             .catch(err => {
                 reject(err)

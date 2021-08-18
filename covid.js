@@ -6,6 +6,10 @@ const population = require('./population');
 const SCALER_DEATH = 50 
 const SCALER_INFECTIONS = 100
 
+const URL_US = 'https://covidtracking.com/api/v1/us/'
+const URL_STATE = 'https://covidtracking.com/api/v1/states/'
+const JSON_TIMEFRAME = 'daily.json'
+
 const getAll = (location) => {
     return new Promise(function (resolve, reject) {
         get(location).then(data => {
@@ -86,10 +90,12 @@ const calculateInfections = (location, data) => {
 const get = (location) => {
     return new Promise(function (resolve, reject) {
         let url;
-        if (location == 'us' || !location)
-            url = `https://covidtracking.com/api/v1/us/daily.json`
-        else
-            url = `https://covidtracking.com/api/v1/states/${location}/daily.json`
+        if (location == 'us' || !location){
+            url = `${URL_US}${JSON_TIMEFRAME}`
+        }
+        else{
+            url = `${URL_STATE}${location}/${JSON_TIMEFRAME}`
+        }
         fetch(url)
             .then(response => response.json())
             .then(data => {
